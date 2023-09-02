@@ -1,0 +1,145 @@
+.app.dark {
+  background-color: #111;
+  color: rgb(156, 156, 156);
+
+  .chartGrid {
+    stroke: rgba(228, 228, 228, 0.219);
+  }
+
+  .table {
+    background-color: #111;
+
+    .tableCell {
+      color: gray;
+    }
+  }
+
+  .navbar {
+    color: #999;
+    border-color: #333;
+
+    .search {
+      border-color: gray;
+    }
+  }
+
+  .sidebar {
+    background-color: #111;
+    border-color: #333;
+
+    .top {
+      .logo {
+        color: #999;
+      }
+    }
+    hr {
+      border-color: #333;
+    }
+
+    ul {
+      li {
+        &:hover {
+          background-color: #333;
+        }
+
+        .icon {
+          color: #999;
+        }
+      }
+    }
+  }
+
+  .datatable {
+    .datagrid {
+      color: gray;
+      border: none;
+
+      .viewButton,
+      .deleteButton,
+      .cellWithStatus {
+        color: gray;
+        border: none;
+      }
+    }
+  }
+  .main_faq {
+    background-color: #111;
+    color: aliceblue;
+    border: white;
+  }
+  .css-mjz37p-MuiPaper-root-MuiAccordion-root{
+     box-shadow: 0px 2px 1px -1px rgba(255, 255, 255, 0.836), 0px 1px 1px 0px rgba(241, 240, 240, 0.973), 0px 1px 3px 0px rgb(253, 252, 252);
+  }
+  .css-1e2bxag-MuiDataGrid-root {
+    color:white !important;
+  }
+  .css-6hp17o-MuiList-root-MuiMenu-list {
+    background: red;
+  }
+  input{
+      background-color: transparent;
+  }
+  .css-1nxhr1h .MuiDataGrid-virtualScroller{
+    background-color: #111;
+  }
+  .css-a75owc{
+    background-color: #111;
+  }
+  .MuiBox-root{
+    background-color: #111;
+    color: white; 
+  }
+.MuiTab-textColorSecondary {  
+  color: white;
+ }
+ .modal-body{
+  background-color: #111;
+ }
+ .cellWithStatus {
+  padding: 2px;
+  border-radius: 5px;
+  width: 65px;
+  text-align: center;
+
+  &.admin {
+    background-color: rgb(28, 77, 4);
+    color: white !important;
+  
+  }
+  &.employee {
+    background-color:rgb(182, 22, 231) !important;
+    color: white !important;
+  }
+  &.gateman {
+    background-color: rgba(209, 32, 85, 0.918);
+    color: white !important;
+  }
+}
+.cellAction {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  .viewButton {
+    padding: 2px 5px;
+    border-radius: 5px;
+    color: white !important;
+    border: #f0f3ea;
+    border-style: dotted!important;
+    cursor: pointer;
+  }
+  
+  .deleteButton {
+    padding: 2px 5px;
+    border-radius: 5px;
+    color: white !important;
+    border: #f0f3ea;
+    border-style: dotted !important;
+    cursor: pointer;
+  }
+}
+
+
+
+}
+

@@ -1,0 +1,51 @@
+/* Custom styles for the thank you page */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .vh-100 {
+    height: 100vh;
+  }
+  
+  .d-flex {
+    display: flex;
+  }
+  
+  .justify-center {
+    justify-content: center;
+  }
+  
+  .align-center {
+    align-items: center;
+    text-align: center;
+    p {
+      margin-top: 10px;
+    }
+  }
+  
+  .custom-button {
+    /* Your custom button styles */
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .custom-button:hover {
+    background-color: #45a049;
+  }
+  // .main_box{
+  //     border: 1px solid rgb(150, 150, 150);
+  //     padding: 50px;
+  
+  // }
+  
