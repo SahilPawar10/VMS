@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo, createContext } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { OutToday, TodaysLogs, ViewLogs } from "../../api/apis";
 import Avatar from "@mui/material/Avatar";
-import { Box } from "@mui/material";
+import "../datatable/datatable.scss";
 
 function CheckedOut() {
   const [data, setData] = useState([]);
@@ -70,8 +70,8 @@ function CheckedOut() {
       flex: 1,
     },
     {
-      field: "checkin",
-      headerName: "CheckIN",
+      field: "checkout",
+      headerName: "CheckOut",
       flex: 1,
     },
     // {
@@ -84,56 +84,16 @@ function CheckedOut() {
 
   return (
     <>
-      <Box height="" width="100%" m="-7px 0 0 0">
-        <Box
-          m="10px 0 0 0"
-          height="85vh"
-          sx={{
-            "& .MuiDataGrid-root": {
-              // border: 'none',
-              // height: '70px',
-            },
-            "& .MuiDataGrid-cell": {
-              // borderBottom: 'none',
-            },
-            "& .name-column--cell": {
-              // color: colors.greenAccent[300],
-            },
-            "& .MuiDataGrid-row": {
-              fontSize: "15px",
-            },
-            "& .MuiDataGrid-columnHeaders": {
-              // backgroundColor: colors.primary[400],
-              // borderBottom: 'none',
-              fontWeight: "700",
-              fontWeight: "bolder",
-              fontSize: "16px",
-            },
-            "& .MuiDataGrid-virtualScroller": {
-              // backgroundColor: colors.primary[400],
-            },
-            "& .MuiDataGrid-footerContainer": {
-              borderTop: "none",
-              // backgroundColor: colors.blueAccent[400],
-            },
-            "& .css-wop1k0-MuiDataGrid-footerContainer": {},
-            "& .MuiCheckbox-root": {
-              // color: `${colors.greenAccent[200]} !important`,
-            },
-            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-              // color: `${colors.grey[100]} !important`,
-            },
-          }}
-        >
-          <DataGrid
-            // checkboxSelection
-            rows={data || []}
-            columns={columns}
-            rowHeight={80}
-            components={{ Toolbar: GridToolbar }}
-          />
-        </Box>
-      </Box>
+      <div className="datatable">
+        <DataGrid
+          className="datagrid"
+          rows={data || []}
+          columns={columns}
+          pageSize={9}
+          rowsPerPageOptions={[9]}
+          // checkboxSelection
+        />
+      </div>
     </>
   );
 }

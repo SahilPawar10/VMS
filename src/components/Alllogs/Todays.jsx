@@ -1,4 +1,5 @@
 import React from "react";
+import "../datatable/datatable.scss";
 import { useState, useMemo } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { TodaysLogs, ViewLogs } from "../../api/apis";
@@ -25,7 +26,7 @@ function Todays() {
     {
       field: "image",
       headerName: "Profile",
-      width: 90,
+      width: 120,
 
       renderCell: (params) => {
         return params.row.visitor?.image ? (
@@ -40,7 +41,7 @@ function Todays() {
     {
       field: "visitor",
       headerName: "Visitor Name",
-      width: 120,
+      width: 150,
       valueGetter: (params) => params.row.visitor?.name || "N/A",
     },
     {
@@ -66,9 +67,11 @@ function Todays() {
       flex: 1,
     },
     {
-      field: "checkin",
-      headerName: "CheckIN",
+      field: "aprooval",
+      headerName: "Aprooval",
       flex: 1,
+      valueGetter: (params) =>
+        params.row.aprooval === true ? "approved" : "pending",
     },
     // {
     //   field: "checkout",
@@ -80,56 +83,16 @@ function Todays() {
 
   return (
     <>
-      <Box height="" width="100%" m="-7px 0 0 0">
-        <Box
-          m="10px 0 0 0"
-          height="85vh"
-          sx={{
-            "& .MuiDataGrid-root": {
-              // border: 'none',
-              // height: '70px',
-            },
-            "& .MuiDataGrid-cell": {
-              // borderBottom: 'none',
-            },
-            "& .name-column--cell": {
-              // color: colors.greenAccent[300],
-            },
-            "& .MuiDataGrid-row": {
-              fontSize: "15px",
-            },
-            "& .MuiDataGrid-columnHeaders": {
-              // backgroundColor: colors.primary[400],
-              // borderBottom: 'none',
-              fontWeight: "700",
-              fontWeight: "bolder",
-              fontSize: "16px",
-            },
-            "& .MuiDataGrid-virtualScroller": {
-              // backgroundColor: colors.primary[400],
-            },
-            "& .MuiDataGrid-footerContainer": {
-              borderTop: "none",
-              // backgroundColor: colors.blueAccent[400],
-            },
-            "& .css-wop1k0-MuiDataGrid-footerContainer": {},
-            "& .MuiCheckbox-root": {
-              // color: `${colors.greenAccent[200]} !important`,
-            },
-            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-              // color: `${colors.grey[100]} !important`,
-            },
-          }}
-        >
-          <DataGrid
-            // checkboxSelection
-            rows={data || []}
-            columns={columns}
-            rowHeight={80}
-            components={{ Toolbar: GridToolbar }}
-          />
-        </Box>
-      </Box>
+      <div className="datatable">
+        <DataGrid
+          className="datagrid"
+          rows={data || []}
+          columns={columns}
+          pageSize={9}
+          rowsPerPageOptions={[9]}
+          // checkboxSelection
+        />
+      </div>
     </>
   );
 }

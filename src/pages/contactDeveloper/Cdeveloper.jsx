@@ -69,13 +69,13 @@ export default function Cdeveloper() {
           id="panel2bh-header"
         >
           <Typography sx={{ width: "33%", flexShrink: 0 }}>
-            <b> 1. Visitor Registration:</b>
+            <b> 1: Visitor Registration:</b>
           </Typography>
-          How to Add Visits..?
-          <Typography
-            sx={{ color: "text.secondary" }}
-            className="main_faq"
-          ></Typography>
+
+          <Typography sx={{ color: "text.secondary" }} className="main_faq">
+            {" "}
+            How to Add Visits..?
+          </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography className="main_faq">
@@ -99,7 +99,7 @@ export default function Cdeveloper() {
           id="panel3bh-header"
         >
           <Typography sx={{ width: "33%", flexShrink: 0 }}>
-            <b>2:Host Notification:</b>
+            <b>2: Host Notification:</b>
           </Typography>
           <Typography sx={{ color: "text.secondary" }} className="main_faq">
             The VMS notifies the host (employee or resident) about their
@@ -122,7 +122,7 @@ export default function Cdeveloper() {
           id="panel3bh-header"
         >
           <Typography sx={{ width: "33%", flexShrink: 0 }}>
-            <b> 3:Access Control Integration:</b>
+            <b> 3: Access Control Integration:</b>
           </Typography>
           <Typography sx={{ color: "text.secondary" }} className="main_faq">
             In some cases, VMSs are integrated with access control systems,
@@ -143,7 +143,7 @@ export default function Cdeveloper() {
           id="panel3bh-header"
         >
           <Typography sx={{ width: "33%", flexShrink: 0 }}>
-            <b> 4:Reporting and Analytics:</b>
+            <b> 4: Reporting and Analytics:</b>
           </Typography>
           <Typography sx={{ color: "text.secondary" }} className="main_faq">
             VMSs can generate reports on visitor data, including the number of

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { useEffect, useState } from "react";
 import "./single.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -27,6 +28,9 @@ const Single = () => {
     //   .then((res) => console.log(res, "GetOnesVisitorMeets"))
     //   .catch((err) => console.log(err));
   }, []);
+
+  
+
   return (
     <div className="single">
       <Sidebar />
@@ -42,7 +46,11 @@ const Single = () => {
                 className="itemImg"
               />
               <div className="details">
-                <h1 className="itemTitle">{user.name}</h1>
+                {/* <h1 className="itemTitle">{user.name}</h1> */}
+                <div className="detailItem">
+                  <span className="itemKey">Name:</span>
+                  <span className="itemValue">{user.name}</span>
+                </div>
                 <div className="detailItem">
                   <span className="itemKey">Email:</span>
                   <span className="itemValue">{user.name}@gmail.com</span>

@@ -11,9 +11,11 @@
     justify-content: center;
 
     .logo {
-      font-size: 20px;
-      font-weight: bold;
-      color: #6439ff;
+      width: 190px;
+      margin-top:20px
+      // width: ;
+      // font-weight: bold;
+      // color: #6439ff;
     }
   }
 
@@ -45,16 +47,16 @@
         cursor: pointer;
 
         &:hover {
-          background-color: #ece8ff;
+          background-color: #c4bee0;
         }
 
         .icon {
-          font-size: 18px;
+          font-size: 23px;
           color: #7451f8;
         }
 
         span{
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 600;
             color: #888;
             margin-left: 10px;

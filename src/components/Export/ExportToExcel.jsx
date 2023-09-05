@@ -12,11 +12,16 @@ export const ExportToExcel = ({ apiData, fileName }) => {
 
   const exportToCSV = (apiData, fileName) => {
     console.log(apiData, "export");
-    const ws = XLSX.utils.json_to_sheet(apiData);
-    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const data = new Blob([excelBuffer], { type: fileType });
-    FileSaver.saveAs(data, fileName + fileExtension);
+
+    if (apiData.length === 0) {
+      alert("No Data Available");
+    } else {
+      const ws = XLSX.utils.json_to_sheet(apiData);
+      const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+      const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+      const data = new Blob([excelBuffer], { type: fileType });
+      FileSaver.saveAs(data, fileName + fileExtension);
+    }
   };
   return (
     <button onClick={(e) => exportToCSV(apiData, fileName)}>Export</button>

@@ -1,9 +1,18 @@
 .app.dark {
+
+
   background-color: #111;
-  color: rgb(156, 156, 156);
+  // color: rgb(156, 156, 156);
+  color:white;
 
   .chartGrid {
-    stroke: rgba(228, 228, 228, 0.219);
+    // stroke: rgba(228, 228, 228, 0.219);
+    color:white;
+  }
+
+  .search input{
+    // color: #999 !important;
+    color:white;
   }
 
   .table {
@@ -13,9 +22,15 @@
       color: gray;
     }
   }
+  .MuiDataGrid{
+    color: gray;
+
+
+  }
 
   .navbar {
-    color: #999;
+    // color: #999;
+    color:white;
     border-color: #333;
 
     .search {
@@ -33,67 +48,93 @@
       }
     }
     hr {
-      border-color: #333;
+      // border-color: #333;
+      color:white;
     }
 
     ul {
       li {
         &:hover {
           background-color: #333;
+          // color:white;
         }
-
+        span{
+          color: white;
+        }
         .icon {
-          color: #999;
+          // color: #999;
+          color:white;
         }
       }
     }
   }
+  ::-webkit-scrollbar {
+    width: 7px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #474646;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #080808;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 
   .datatable {
     .datagrid {
-      color: gray;
+      // color: gray;
+      color: white;
       border: none;
 
       .viewButton,
       .deleteButton,
       .cellWithStatus {
-        color: gray;
+        // color: gray;
+        color: white;
         border: none;
       }
+
     }
   }
   .main_faq {
-    background-color: #111;
-    color: aliceblue;
-    border: white;
+    background-color: #111 !important;
+    color: aliceblue !important;
+    border: white !important;
   }
   .css-mjz37p-MuiPaper-root-MuiAccordion-root{
-     box-shadow: 0px 2px 1px -1px rgba(255, 255, 255, 0.836), 0px 1px 1px 0px rgba(241, 240, 240, 0.973), 0px 1px 3px 0px rgb(253, 252, 252);
+     box-shadow: 0px 2px 1px -1px rgba(255, 255, 255, 0.836), 0px 1px 1px 0px rgba(241, 240, 240, 0.973), 0px 1px 3px 0px rgb(253, 252, 252) !important;
   }
-  .css-1e2bxag-MuiDataGrid-root {
-    color:white !important;
-  }
+  // .css-1e2bxag-MuiDataGrid-root {
+  //   color:white !important;
+  // }
   .css-6hp17o-MuiList-root-MuiMenu-list {
-    background: red;
+    background: red !important;
   }
   input{
       background-color: transparent;
   }
   .css-1nxhr1h .MuiDataGrid-virtualScroller{
-    background-color: #111;
+    background-color: #111 !important;
   }
   .css-a75owc{
-    background-color: #111;
+    background-color: #111 !important;
   }
   .MuiBox-root{
-    background-color: #111;
+    background-color: #111 !important;
     color: white; 
   }
 .MuiTab-textColorSecondary {  
-  color: white;
+  color: white !important;
  }
  .modal-body{
-  background-color: #111;
+  background-color: #111 !important;
  }
  .cellWithStatus {
   padding: 2px;
@@ -124,8 +165,8 @@
     padding: 2px 5px;
     border-radius: 5px;
     color: white !important;
-    border: #f0f3ea;
-    border-style: dotted!important;
+    border: #303439 !important;
+    border-style: solid !important;
     cursor: pointer;
   }
   
@@ -133,12 +174,18 @@
     padding: 2px 5px;
     border-radius: 5px;
     color: white !important;
-    border: #f0f3ea;
-    border-style: dotted !important;
+    border: #303439 !important;
+    border-style: solid !important;
     cursor: pointer;
   }
 }
 
+.tableCell{
+  background-color: #111;
+  // color: rgb(156, 156, 156);
+  // color: gray !important;
+  color: white !important;
+}
 
 
 }

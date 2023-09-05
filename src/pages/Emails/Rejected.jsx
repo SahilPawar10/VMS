@@ -1,9 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom"; // If using React Router for navigation
 import "./Verifieds.scss";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-const Verifieds = () => {
+function Rejected() {
   return (
     <>
       <div className="vh-100 d-flex justify-center align-center ">
@@ -13,7 +12,7 @@ const Verifieds = () => {
             <CheckCircleIcon style={{ fontSize: "60px", color: "#4caf50" }} />
           </div>
           <div className="text-center">
-            <h1>Visit Approved !</h1>
+            <h1>Visit Rejected!</h1>
             <p>Team VMS</p>
             <button className="custom-button ">Thank You</button>
           </div>
@@ -21,6 +20,6 @@ const Verifieds = () => {
       </div>
     </>
   );
-};
+}
 
-export default Verifieds;
+export default Rejected;

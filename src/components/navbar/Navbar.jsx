@@ -19,15 +19,11 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="wrapper">
-        <div className="search">
+        {/* <div className="search">
           <input type="text" placeholder="Search..." />
           <SearchOutlinedIcon />
-        </div>
+        </div> */}
         <div className="items">
-          <div className="item">
-            <LanguageOutlinedIcon className="icon" />
-            English
-          </div>
           <div className="item">
             <DarkModeOutlinedIcon
               className="icon"
@@ -35,7 +31,7 @@ const Navbar = () => {
             />
           </div>
           <div className="item">
-            <Link to="/faq"  style={{ textDecoration: "none" , color:"gray"}}>
+            <Link to="/faq" style={{ textDecoration: "none", color: "gray" }}>
               <PsychologyOutlinedIcon className="icon" />
             </Link>
           </div>
@@ -51,9 +47,9 @@ const Navbar = () => {
             <ChatBubbleOutlineOutlinedIcon className="icon" />
             <div className="counter">2</div>
           </div> */}
-          <div className="item">
+          {/* <div className="item">
             <ListOutlinedIcon className="icon" />
-          </div>
+          </div> */}
           <div className="item">
             <Profile />
           </div>

@@ -11,7 +11,7 @@ import { DarkModeContext } from "./context/darkModeContext";
 import VisitorList from "./pages/list/VisitorList";
 import StaffData from "./pages/list/StaffData";
 import ApprovalList from "./pages/list/ApprovalList";
-import ViewOne from "./components/table/ViewOne";
+
 import AllLogs from "./pages/logs/AllLogs";
 import Verifieds from "./pages/Emails/Verifieds";
 import Vfailed from "./pages/Emails/Vfailed";
@@ -19,6 +19,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Profile from "./components/admin/Profile";
 import Contactus from "../src/pages/ContactUS/Contactuslist";
 import Cdeveloperlist from "./pages/contactDeveloper/Cdeveloperlist";
+import Rejected from "./pages/Emails/Rejected";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -33,6 +34,7 @@ function App() {
             <Route path="/logs" element={<AllLogs />} />
             <Route path="/verified" element={<Verifieds />} />
             <Route path="/failed" element={<Vfailed />} />
+            <Route path="/reject" element={<Rejected />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/contact" element={<Contactus />} />
             <Route path="/faq" element={<Cdeveloperlist />} />

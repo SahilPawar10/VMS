@@ -13,7 +13,10 @@ const Visitor = () => {
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchInput, setSearchInput] = useState("");
 
-  const exportData = data.map((item) => item);
+  const exportData = data.map((visitor) => {
+    const { image, ...restOfData } = visitor;
+    return restOfData;
+  });
 
   const fileName = "visitorList";
 

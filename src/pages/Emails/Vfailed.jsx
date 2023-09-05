@@ -14,9 +14,9 @@ const Vfailed = () => {
           </div>
           <div className="text-center">
             <h1 style={{ color: "red" }}>Verification Failed !</h1>
-            <p>There was an error</p>
-            <Link to="/">
-              <button className="custom-button ">Back Home</button>
+            <p>There was an error,Contact Admin</p>
+            <Link>
+              <button className="custom-button ">Thank You</button>
             </Link>
           </div>
         </div>

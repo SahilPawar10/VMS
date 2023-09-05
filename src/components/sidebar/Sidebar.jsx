@@ -4,6 +4,7 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import StoreIcon from "@mui/icons-material/Store";
+import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -11,6 +12,7 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import logo from "../../assets/logo1.png";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
@@ -29,7 +31,8 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="top">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">Admin@vms</span>
+          <img src={logo} alt="" className="logo" />
+          {/* <span>Admin@vms</span> */}
         </Link>
       </div>
       <hr />
@@ -64,7 +67,7 @@ const Sidebar = () => {
           <Link to="/logs" style={{ textDecoration: "none" }}>
             <li>
               {/* logs */}
-              <LocalShippingIcon className="icon" />
+              <PeopleOutlineIcon className="icon" />
               <span>Logs</span>
             </li>
           </Link>
@@ -78,13 +81,13 @@ const Sidebar = () => {
             <span>Notifications</span>
           </li> */}
 
-          <p className="title">SERVICE</p>
+          {/* <p className="title">SERVICE</p>
           <Link to="/contact" style={{ textDecoration: "none" }}>
             <li>
               <SettingsSystemDaydreamOutlinedIcon className="icon" />
               <span>Contact </span>
             </li>
-          </Link>
+          </Link> */}
           <Link to="/faq" style={{ textDecoration: "none" }}>
             <li>
               <PsychologyOutlinedIcon className="icon" />
