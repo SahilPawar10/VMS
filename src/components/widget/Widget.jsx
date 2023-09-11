@@ -5,7 +5,7 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
-import { ViewLogs, VisitorIn, VisitorOut } from "../../api/apis";
+import { ViewLogs, VisitorIn, VisitorOut } from "../../api/visitor/apis";
 import { useNavigate } from "react-router-dom";
 
 const Widget = ({ type }) => {
@@ -78,7 +78,7 @@ const Widget = ({ type }) => {
   switch (type) {
     case "user":
       data = {
-        title: "VisitorIN",
+        title: "Visitor IN",
         isMoney: false,
         link: "view list",
         amount: visitorIN,
@@ -96,7 +96,7 @@ const Widget = ({ type }) => {
       break;
     case "order":
       data = {
-        title: "VisitorOut",
+        title: "Visitor Out",
         isMoney: false,
         link: "View list",
         amount: visitorOut,
@@ -116,7 +116,7 @@ const Widget = ({ type }) => {
       data = {
         title: "Approvals",
         isMoney: true,
-        link: "View pending approvals",
+        link: "View approvals",
         amount: approval,
         path: "/approval",
         icon: (
@@ -129,7 +129,7 @@ const Widget = ({ type }) => {
       break;
     case "balance":
       data = {
-        title: "OverAll Visitors",
+        title: "Overall Visitors",
         isMoney: true,
         link: `See details `,
         amount: visitorAll,

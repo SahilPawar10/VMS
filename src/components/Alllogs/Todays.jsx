@@ -2,9 +2,10 @@ import React from "react";
 import "../datatable/datatable.scss";
 import { useState, useMemo } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { TodaysLogs, ViewLogs } from "../../api/apis";
+// import { TodaysLogs, ViewLogs } from "../../api/apis";
 import Avatar from "@mui/material/Avatar";
 import { Box } from "@mui/material";
+import { TodaysLogs } from "../../api/visitor/apis";
 
 function Todays() {
   const [data, setData] = useState([]);

@@ -1,0 +1,23 @@
+.text-center {
+    text-align: center;
+  }
+  
+  .image-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .image-link {
+    position: absolute;
+    top: 87%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(17, 141, 11, 0.945); /* Background color for better readability */
+    padding: 5px 100px; /* Add padding for better aesthetics */
+    border-radius: 5px; /* Add rounded corners */
+    text-decoration: none; /* Remove underline from the link */
+    color: black; /* Text color */
+    font-weight: bold; /* Optionally make the text bold */
+    z-index: 1; /* Ensure the link is on top of the image */
+  }
+  

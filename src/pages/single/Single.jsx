@@ -6,7 +6,7 @@ import Navbar from "../../components/navbar/Navbar";
 import Chart from "../../components/chart/Chart";
 // import List from "../../components/table/Table";
 import { useParams } from "react-router-dom";
-import { viewOne } from "../../api/apis";
+import { viewOne } from "../../api/visitor/apis";
 import ViewOne from "../../components/table/ViewOne";
 
 const Single = () => {
@@ -28,8 +28,6 @@ const Single = () => {
     //   .then((res) => console.log(res, "GetOnesVisitorMeets"))
     //   .catch((err) => console.log(err));
   }, []);
-
-  
 
   return (
     <div className="single">

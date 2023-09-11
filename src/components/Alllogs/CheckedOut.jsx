@@ -2,9 +2,10 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState, useMemo, createContext } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { OutToday, TodaysLogs, ViewLogs } from "../../api/apis";
+// import { OutToday, TodaysLogs, ViewLogs } from "../../api/apis";
 import Avatar from "@mui/material/Avatar";
 import "../datatable/datatable.scss";
+import { OutToday } from "../../api/visitor/apis";
 
 function CheckedOut() {
   const [data, setData] = useState([]);

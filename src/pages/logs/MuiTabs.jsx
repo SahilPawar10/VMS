@@ -23,8 +23,8 @@ function MuiTabs() {
         textColor="secondary"
         indicatorColor="secondary"
       >
-        <Tab label="CheckedIn" />
-        <Tab label="CheckedOut" />
+        <Tab label="Checked In" />
+        <Tab label="Checked Out" />
         <Tab label="Todays" />
       </Tabs>
       {value === 0 && <CheckedIn />}

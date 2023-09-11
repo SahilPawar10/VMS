@@ -6,14 +6,17 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
+
+import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 import Tooltip from "@mui/material/Tooltip";
 import { Person, Call, Email } from "@mui/icons-material";
 import Logout from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
-import { ViewProfile } from "../../api/apis";
+// import { ViewProfile } from "../../api/apis";
 
 import { useState, useEffect } from "react";
+import ConfirmDelete from "../ConfirmDelete/ConfirmDelete";
+import { ViewProfile } from "../../api/staff/staff.api";
 
 export default function Profile() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -34,8 +37,31 @@ export default function Profile() {
     navigate("/login");
   };
 
+  const [displayConfirmationModal, setDisplayConfirmationModal] =
+    useState(false);
+  const [deleteMessage, setDeleteMessage] = useState(null);
+
+  const hideConfirmationModal = () => {
+    setDisplayConfirmationModal(false);
+  };
+
+  const handleLogout = (id) => {
+    localStorage.clear();
+    navigate("/login");
+  };
+
+  // Handle the displaying of the modal based on type and id
+  const showDeleteModal = () => {
+    // setId(id);
+    setDeleteMessage(`Are you sure you want logout from app ?`);
+
+    setDisplayConfirmationModal(true);
+  };
+
   const user = User.name ? (
-    <Avatar sx={{ width: 32, height: 32 }}>{User.name[0]}</Avatar>
+    <Avatar sx={{ width: 32, height: 32, backgroundColor: "#7451f8" }}>
+      {User.name[0]}
+    </Avatar>
   ) : (
     "A"
   );
@@ -65,7 +91,13 @@ export default function Profile() {
 
   return (
     <React.Fragment>
-      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          textAlign: "center",
+        }}
+      >
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
@@ -141,7 +173,7 @@ export default function Profile() {
 
         <MenuItem>
           <ListItemIcon>
-            <Email fontSize="small" />
+            <PermContactCalendarIcon fontSize="small" />
           </ListItemIcon>
 
           {User?.role}
@@ -149,7 +181,7 @@ export default function Profile() {
 
         <Divider />
 
-        <MenuItem onClick={logOut}>
+        <MenuItem onClick={showDeleteModal}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
@@ -158,6 +190,14 @@ export default function Profile() {
 
         <Divider />
       </Menu>
+
+      <ConfirmDelete
+        showModal={displayConfirmationModal}
+        hideModal={hideConfirmationModal}
+        confirmDelete={handleLogout}
+        message={deleteMessage}
+        confirmtype={"Confirm Logout"}
+      />
     </React.Fragment>
   );
 }

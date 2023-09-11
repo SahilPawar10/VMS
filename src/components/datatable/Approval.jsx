@@ -4,8 +4,10 @@ import { approvalColumns } from "../../datatablesource";
 import { Link, useNavigate } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { useEffect, useState } from "react";
-import { ViewLogs, approveMeet } from "../../api/apis";
+// import { ViewLogs, approveMeet } from "../../api/apis";
 import { ExportToExcel } from "../Export/ExportToExcel";
+import ConfirmDelete from "../ConfirmDelete/ConfirmDelete";
+import { ViewLogs, approveMeet } from "../../api/visitor/apis";
 
 const Approval = () => {
   const [data, setData] = useState([]);
@@ -15,6 +17,15 @@ const Approval = () => {
 
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+
+  const [id, setId] = useState(null);
+  const [displayConfirmationModal, setDisplayConfirmationModal] =
+    useState(false);
+  const [deleteMessage, setDeleteMessage] = useState(null);
+
+  const hideConfirmationModal = () => {
+    setDisplayConfirmationModal(false);
+  };
 
   const searchItems = (searchValue) => {
     setSearchInput(searchValue);
@@ -32,42 +43,36 @@ const Approval = () => {
     }
   };
 
-  const handleApproval = (id, boolean) => {
+  const handleApproval = (id, status) => {
     const formdata = {
-      aprooval: boolean,
+      aprooval: status ? status : "rejected",
     };
     // console.log(id, data);
     approveMeet(id, formdata)
       .then((res) => {
         console.log(res.data);
-        ViewLogs().then((res) => setData(res.data));
         viewLogs();
-        alert("Visit Approved!");
+        // alert("Visit Approved!");
       })
       .catch((err) => console.log(err));
-  };
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-
-    let visitor = data.filter((item) => item.id === id);
-    console.log(visitor[0].visitor.id);
+    hideConfirmationModal(false);
   };
 
   function viewLogs() {
     ViewLogs()
       .then((data) => {
         let temp = data.data.filter((visitor) => {
-          return visitor.aprooval === false;
+          return visitor.aprooval === "pending";
         });
         let addedId = [];
         for (let i = 0; i < temp.length; i++) {
           temp[i].srNo = i + 1;
-          temp[i].aprooval = "pending";
+          // temp[i].aprooval = "pending";
           addedId.push(temp[i]);
         }
         setData(addedId);
-        console.log(addedId);
+        // console.log(addedId);
       })
       .catch((err) => {
         console.log(err, "error");
@@ -77,6 +82,20 @@ const Approval = () => {
   useEffect(() => {
     viewLogs();
   }, []);
+
+  const handleDelete = (id) => {
+    setData(data.filter((item) => item.id !== id));
+    console.log("handleDelete");
+    hideConfirmationModal();
+  };
+
+  // Handle the displaying of the modal based on type and id
+  const showDeleteModal = (id) => {
+    setId(id);
+    setDeleteMessage(`Are you sure you want to reject this meet?`);
+
+    setDisplayConfirmationModal(true);
+  };
 
   const actionColumn = [
     {
@@ -88,15 +107,15 @@ const Approval = () => {
           <div className="cellAction">
             <div
               className="viewButton"
-              onClick={() => handleApproval(params.row.id, true)}
+              onClick={() => handleApproval(params.row.id, "approved")}
             >
               Approve
             </div>
             <div
               className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
+              onClick={() => showDeleteModal(params.row.id)}
             >
-              Delete
+              Reject
             </div>
           </div>
         );
@@ -115,9 +134,12 @@ const Approval = () => {
           />
           <SearchOutlinedIcon />
         </div>
-        <Link className="link">
+        {/* <Link>
           <ExportToExcel apiData={data} fileName={fileName} />
-        </Link>
+        </Link> */}
+        <div>
+          <ExportToExcel apiData={data} fileName={fileName} />
+        </div>
       </div>
       {searchInput.length > 1 ? (
         <DataGrid
@@ -138,6 +160,13 @@ const Approval = () => {
           // checkboxSelection
         />
       )}
+      <ConfirmDelete
+        showModal={displayConfirmationModal}
+        hideModal={hideConfirmationModal}
+        confirmDelete={handleApproval}
+        id={id}
+        message={deleteMessage}
+      />
     </div>
   );
 };

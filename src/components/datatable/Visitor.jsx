@@ -4,8 +4,10 @@ import { visitorColumns } from "../../datatablesource";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { AllVisitor } from "../../api/apis";
+// import { AllVisitor } from "../../api/visitor/apis";
 import { ExportToExcel } from "../Export/ExportToExcel";
+import ConfirmDelete from "../ConfirmDelete/ConfirmDelete";
+import { AllVisitor, deleteVisitor } from "../../api/visitor/apis";
 
 const Visitor = () => {
   const [data, setData] = useState([]);
@@ -13,8 +15,17 @@ const Visitor = () => {
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchInput, setSearchInput] = useState("");
 
+  const [id, setId] = useState(null);
+  const [displayConfirmationModal, setDisplayConfirmationModal] =
+    useState(false);
+  const [deleteMessage, setDeleteMessage] = useState(null);
+
+  const hideConfirmationModal = () => {
+    setDisplayConfirmationModal(false);
+  };
+
   const exportData = data.map((visitor) => {
-    const { image, ...restOfData } = visitor;
+    const { image, isDeleted, ...restOfData } = visitor;
     return restOfData;
   });
 
@@ -22,11 +33,7 @@ const Visitor = () => {
 
   const navigate = useNavigate();
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-  };
-
-  useEffect(() => {
+  function getVisitor() {
     AllVisitor()
       .then((res) => {
         let addedId = [];
@@ -41,6 +48,10 @@ const Visitor = () => {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  useEffect(() => {
+    getVisitor();
   }, []);
 
   const searchItems = (searchValue) => {
@@ -59,6 +70,28 @@ const Visitor = () => {
     }
   };
 
+  //confirm Delete
+
+  const handleDelete = (id) => {
+    deleteVisitor(id)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+
+    console.log("handleDelete");
+    getVisitor();
+    hideConfirmationModal();
+  };
+
+  // Handle the displaying of the modal based on type and id
+  const showDeleteModal = (id) => {
+    setId(id);
+    setDeleteMessage(`Are you sure you want to delete the record?`);
+
+    setDisplayConfirmationModal(true);
+  };
+
   const actionColumn = [
     {
       field: "action",
@@ -75,7 +108,7 @@ const Visitor = () => {
             </div>
             <div
               className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
+              onClick={() => showDeleteModal(params.row.id)}
             >
               Delete
             </div>
@@ -97,7 +130,7 @@ const Visitor = () => {
         </div>
         {/* <div></div> */}
 
-        <div className="link">
+        <div>
           <ExportToExcel apiData={exportData} fileName={fileName} />
         </div>
       </div>
@@ -121,6 +154,14 @@ const Visitor = () => {
           // checkboxSelection
         />
       )}
+
+      <ConfirmDelete
+        showModal={displayConfirmationModal}
+        hideModal={hideConfirmationModal}
+        confirmDelete={handleDelete}
+        id={id}
+        message={deleteMessage}
+      />
     </div>
   );
 };

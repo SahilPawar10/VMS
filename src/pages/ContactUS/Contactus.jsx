@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import "../ContactUS/Contact.scss";
-import { connectDeveloper } from "../../api/apis";
+import { connectDeveloper } from "../../api/visitor/apis";
 import { useNavigate } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";

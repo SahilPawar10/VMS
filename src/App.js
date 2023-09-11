@@ -20,6 +20,8 @@ import Profile from "./components/admin/Profile";
 import Contactus from "../src/pages/ContactUS/Contactuslist";
 import Cdeveloperlist from "./pages/contactDeveloper/Cdeveloperlist";
 import Rejected from "./pages/Emails/Rejected";
+import Test from "./pages/contactDeveloper/Test";
+import NotFoundPage from "./pages/NotFound/PageNotFound";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -29,6 +31,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/">
+            <Route path="*" element={<NotFoundPage />} />
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logs" element={<AllLogs />} />
@@ -38,6 +41,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/contact" element={<Contactus />} />
             <Route path="/faq" element={<Cdeveloperlist />} />
+            <Route path="/test" element={<Test />} />
 
             <Route path="users">
               <Route index element={<VisitorList />} />

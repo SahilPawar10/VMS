@@ -3,8 +3,8 @@ import jwt_decode from "jwt-decode";
 
 const axiosInstance = axios.create({
   // baseURL: 'http://4.213.4.211/v1/', // base URL in use
-  baseURL: "http://192.168.1.145:3000/v1", //  server
-  // baseURL: "http://localhost:3002/v1", // local server
+  // baseURL: "http://192.168.1.145:3000/v1", //  server
+  baseURL: "http://localhost:3002/v1", // local server
 });
 
 axiosInstance.interceptors.request.use(

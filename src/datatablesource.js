@@ -155,21 +155,31 @@ export const staffColumns = [
     width: 180,
     cellClassName: "name-column--cell",
 
-    valueGetter: (params) => `${params.row.firstName} ${params.row.lastName}`,
+    valueGetter: (params) => {
+      let firstName =
+        params.row.firstName.charAt(0).toUpperCase() +
+        params.row.firstName.substring(1, params.row.firstName.length);
+
+      let LastName =
+        params.row.lastName.charAt(0).toUpperCase() +
+        params.row.lastName.substring(1, params.row.lastName.length);
+
+      return `${firstName} ${LastName}`;
+    },
   },
 
   {
     field: "mobileno",
     headerName: "Phone Number",
 
-    width: 180,
+    width: 160,
   },
   {
     field: "email",
     headerName: "Email",
     flex: 1,
 
-    width: 180,
+    width: 200,
   },
   {
     field: "ole",

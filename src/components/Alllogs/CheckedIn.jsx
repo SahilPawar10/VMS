@@ -2,9 +2,10 @@ import React from "react";
 import "../datatable/datatable.scss";
 import { useEffect, useState, useMemo } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { OutToday, TodaysLogs, ViewLogs, inToday } from "../../api/apis";
+// import { OutToday, TodaysLogs, ViewLogs, inToday } from "../../api/apis";
 import Avatar from "@mui/material/Avatar";
 import { Box } from "@mui/material";
+import { inToday } from "../../api/visitor/apis";
 function CheckedIn() {
   const [data, setData] = useState([]);
 
@@ -81,7 +82,6 @@ function CheckedIn() {
   return (
     <>
       <div className="datatable">
-
         <DataGrid
           className="datagrid"
           rows={data || []}

@@ -88,25 +88,25 @@ const Sidebar = () => {
               <span>Contact </span>
             </li>
           </Link> */}
-          <Link to="/faq" style={{ textDecoration: "none" }}>
+          {/* <Link to="/faq" style={{ textDecoration: "none" }}>
             <li>
               <PsychologyOutlinedIcon className="icon" />
               <span>FAQ</span>
             </li>
-          </Link>
+          </Link> */}
           {/* <li>
             <SettingsApplicationsIcon className="icon" />
             <span>Contact Developer</span>
           </li> */}
-          <p className="title">USER</p>
+          {/* <p className="title">USER</p> */}
           {/* profile */}
-          <li>
+          {/* <li>
             <ExitToAppIcon className="icon" />
             <span onClick={() => logout()}>Logout</span>
-          </li>
+          </li> */}
         </ul>
       </div>
-      <div className="bottom">
+      {/* <div className="bottom">
         <div
           className="colorOption"
           onClick={() => dispatch({ type: "LIGHT" })}
@@ -115,7 +115,7 @@ const Sidebar = () => {
           className="colorOption"
           onClick={() => dispatch({ type: "DARK" })}
         ></div>
-      </div>
+      </div> */}
     </div>
   );
 };

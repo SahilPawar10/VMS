@@ -7,10 +7,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+// import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Avatar from "@mui/material/Avatar";
-import { TodaysPresent, ViewLogs } from "../../api/apis";
-import { Box } from "@mui/material";
+import { TodaysPresent, ViewLogs } from "../../api/visitor/apis";
 
 const List = () => {
   const [visitor, setVisitor] = useState([]);

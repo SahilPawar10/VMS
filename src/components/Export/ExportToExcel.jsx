@@ -2,6 +2,7 @@ import React from "react";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 import "../datatable/datatable.scss";
+import BackupIcon from "@mui/icons-material/Backup";
 
 export const ExportToExcel = ({ apiData, fileName }) => {
   // console.log(apiData);
@@ -24,6 +25,11 @@ export const ExportToExcel = ({ apiData, fileName }) => {
     }
   };
   return (
-    <button onClick={(e) => exportToCSV(apiData, fileName)}>Export</button>
+    <button
+      className="exportlink"
+      onClick={(e) => exportToCSV(apiData, fileName)}
+    >
+      <BackupIcon /> &nbsp;Export
+    </button>
   );
 };

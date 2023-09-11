@@ -24,17 +24,17 @@ const Navbar = () => {
           <SearchOutlinedIcon />
         </div> */}
         <div className="items">
-          <div className="item">
+          {/* <div className="item">
             <DarkModeOutlinedIcon
               className="icon"
               onClick={() => dispatch({ type: "TOGGLE" })}
             />
-          </div>
-          <div className="item">
+          </div> */}
+          {/* <div className="item">
             <Link to="/faq" style={{ textDecoration: "none", color: "gray" }}>
               <PsychologyOutlinedIcon className="icon" />
             </Link>
-          </div>
+          </div> */}
 
           {/* <div className="item">
             <FullscreenExitOutlinedIcon className="icon" />
