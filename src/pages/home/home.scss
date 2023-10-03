@@ -9,10 +9,23 @@
       display: flex;
       padding: 20px;
       gap: 20px;
+        // box-shadow: 0 0 0.375rem 0.25rem rgba(161, 172, 184, 0.15);
+
     }
+    .css-11xur9t-MuiPaper-root-MuiTableContainer-root{
+    box-shadow: 0 0 0.375rem 0.25rem rgba(161, 172, 184, 0.15);
+    }
+   
 
     .charts {
       padding: 5px 20px;
+
+    }
+    .H_dashboard{
+      color: #5430dd;;
+      font-size: 24px;
+      // margin-top: 20px;
+    
     }
 
     .listContainer {

@@ -6,31 +6,36 @@ import CheckedIn from "../../components/Alllogs/CheckedIn";
 import CheckedOut from "../../components/Alllogs/CheckedOut";
 import Todays from "../../components/Alllogs/Todays";
 import { useState, createContext, useContext } from "react";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
 
 function MuiTabs() {
   const [value, setValue] = React.useState(1);
+  const [startDate, setStartDate] = useState(new Date());
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
-    <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        centered
-        textColor="secondary"
-        indicatorColor="secondary"
-      >
-        <Tab label="Checked In" />
-        <Tab label="Checked Out" />
-        <Tab label="Todays" />
-      </Tabs>
-      {value === 0 && <CheckedIn />}
-      {value === 1 && <CheckedOut />}
-      {value === 2 && <Todays />}
-    </Box>
+    <>
+      <div className="d-flex mt-4">
+        <div className=" px-4">
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+          />
+        </div>
+
+        <button className=" btn  link btn-sm" style={{ background: "#7451f8",color:"white" }}>
+          Search
+        </button>
+      </div>
+
+      <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+        {value === 1 && <CheckedIn />}
+      </Box>
+    </>
   );
 }
 

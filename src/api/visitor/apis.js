@@ -125,3 +125,12 @@ export const connectDeveloper = (data) => {
       .catch((err) => reject(err));
   });
 };
+
+export const findByDate = (data) => {
+  return new Promise((resolve, reject) => {
+    const url = `/visitor/bydate`;
+    Axios.post(url, data)
+      .then((response) => resolve(response))
+      .catch((err) => reject(err));
+  });
+};

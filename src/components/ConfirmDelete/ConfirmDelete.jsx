@@ -1,7 +1,14 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
-function ConfirmDelete({ showModal, hideModal, confirmDelete, id, message ,confirmtype}) {
+function ConfirmDelete({
+  showModal,
+  hideModal,
+  confirmDelete,
+  id,
+  message,
+  confirmtype,
+}) {
   const title = confirmtype ? (
     <Modal.Title> {confirmtype}</Modal.Title>
   ) : (
@@ -24,7 +31,8 @@ function ConfirmDelete({ showModal, hideModal, confirmDelete, id, message ,confi
               confirmDelete(id);
             }}
           >
-            Delete
+            {confirmtype ? "Logout" : "Delete"}
+            {/* Delete */}
           </Button>
         </Modal.Footer>
       </Modal>

@@ -5,12 +5,17 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
-import { ViewLogs, VisitorIn, VisitorOut } from "../../api/visitor/apis";
+import {
+  AllVisitor,
+  ViewLogs,
+  VisitorIn,
+  VisitorOut,
+} from "../../api/visitor/apis";
 import { useNavigate } from "react-router-dom";
 
-const Widget = ({ type }) => {
+const Widget = ({ type, dataCount = 0 }) => {
   const navigate = useNavigate();
-  const [visitor, setVisitor] = useState([]);
+  // const [visitor, setVisitor] = useState([]);
   const [visitorIN, setVisitorIN] = useState([]);
   const [visitorOut, setVisitorOut] = useState([]);
   const [visitorAll, setVisitorAll] = useState([]);
@@ -19,19 +24,6 @@ const Widget = ({ type }) => {
 
   let data;
   //temporary
-  const amount = 100;
-  const diff = 20;
-
-  const onChange = (e) => {
-    // const name = e.target.name;
-    const value = e.target.value;
-    // setPath((preveState) => ({
-    //   ...preveState,
-    //   [name]: value,
-    // }));
-    console.log(e);
-    setPath(value);
-  };
 
   const redirect = (path) => {
     // e.preventDefault();
@@ -47,22 +39,28 @@ const Widget = ({ type }) => {
 
         let temp = 0;
         data.data.forEach((visitor) => {
-          if (visitor.aprooval === false) temp += 1;
+          if (visitor.aprooval === "pending") temp += 1;
         });
         setApproval(temp);
-        setVisitor(data.data);
-        setVisitorAll(data.data.length);
+        // setVisitor(data.data);
       })
       .catch((err) => {
         console.log(err, "error");
       });
 
-    VisitorIn()
-      .then((data) => {
-        setVisitorIN(data.data.length);
+    AllVisitor()
+      .then((res) => {
+        let addedId = [];
+        for (let i = 0; i < res.data.length; i++) {
+          res.data[i].srNo = i + 1;
+          addedId.push(res.data[i]);
+        }
+
+        setVisitorAll(res.data.length);
+        // console.log(data);
       })
       .catch((err) => {
-        console.log(err, "error");
+        console.log(err);
       });
 
     VisitorOut()
@@ -81,7 +79,7 @@ const Widget = ({ type }) => {
         title: "Visitor IN",
         isMoney: false,
         link: "view list",
-        amount: visitorIN,
+        amount: dataCount,
         path: "/logs",
         icon: (
           <PersonOutlinedIcon
@@ -99,7 +97,7 @@ const Widget = ({ type }) => {
         title: "Visitor Out",
         isMoney: false,
         link: "View list",
-        amount: visitorOut,
+        amount: dataCount,
         path: "/logs",
         icon: (
           <ShoppingCartOutlinedIcon

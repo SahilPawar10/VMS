@@ -4,7 +4,7 @@ import * as XLSX from "xlsx";
 import "../datatable/datatable.scss";
 import BackupIcon from "@mui/icons-material/Backup";
 
-export const ExportToExcel = ({ apiData, fileName }) => {
+export const ExportToExcel = ({ apiData, fileName, button }) => {
   // console.log(apiData);
   const fileType =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
@@ -29,7 +29,7 @@ export const ExportToExcel = ({ apiData, fileName }) => {
       className="exportlink"
       onClick={(e) => exportToCSV(apiData, fileName)}
     >
-      <BackupIcon /> &nbsp;Export
+      <BackupIcon /> &nbsp;{button}
     </button>
   );
 };

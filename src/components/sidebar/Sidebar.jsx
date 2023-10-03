@@ -12,7 +12,7 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import logo from "../../assets/logo1.png";
+import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
@@ -28,26 +28,26 @@ const Sidebar = () => {
     navigate("/login");
   };
   return (
-    <div className="sidebar">
-      <div className="top">
+    <div className="sidebar ">
+      <div className="top mt-3">
         <Link to="/" style={{ textDecoration: "none" }}>
           <img src={logo} alt="" className="logo" />
           {/* <span>Admin@vms</span> */}
         </Link>
       </div>
-      <hr />
-      <div className="center">
+
+      <div className="center mt-4">
         <ul>
-          <p className="title">MAIN</p>
+          {/* <p className="title">MAIN</p> */}
           <Link to="/" style={{ textDecoration: "none" }}>
-            <li>
+            <li id="li1">
               <DashboardIcon className="icon" />
               <span>Dashboard</span>
             </li>
           </Link>
-          <p className="title">LISTS</p>
+          {/* <p className="title">LISTS</p> */}
           <Link to="/staff" style={{ textDecoration: "none" }}>
-            <li>
+            <li id="li1">
               <PersonOutlineIcon className="icon" />
               <span>Staff</span>
             </li>

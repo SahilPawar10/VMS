@@ -1,16 +1,48 @@
 import "./login.scss";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Row from "react-bootstrap/Row";
-import { Authentication } from "../../api/visitor/apis";
-import { json, useNavigate } from "react-router-dom";
+import { useState, forwardRef } from "react";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+// import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCredentials, clearToken } from "../../reducers/auth.reducer";
+
+import { useLoginMutation } from "../../apiservices/authSlice";
+
 const Login = () => {
   const [logIn, setLogIn] = useState();
+  const [message, setMessage] = useState();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  //.....................SnackBar................................
+
+  const Alert = forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const [state, setState] = useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+  const { vertical, horizontal, open } = state;
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+    setMessage("");
+  };
+
+  //.....................RTK QUERY................................
+
+  const [login] = useLoginMutation();
+
+  // const [userLogin, { isLoading }] = useUserLoginMutation();
+
+  const handleAction = (user, token) => {
+    dispatch(setCredentials(user, token));
+  };
 
   const onChange = (e) => {
     const name = e.target.name;
@@ -24,19 +56,21 @@ const Login = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log("Api Login");
-    Authentication(logIn)
-      .then((data) => {
-        console.log(data.data.user);
-        localStorage.setItem("mobile", data.data.user.number);
-        localStorage.setItem("access_token", data.data.tokens.access.token);
-        localStorage.setItem("refresh_token", data.data.tokens.refresh.token);
-        console.log(data.data.tokens.access.token);
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("user not found");
-      });
+    const { error, data } = await login(logIn);
+    if (error) {
+      console.log(error.data.message);
+      setMessage(error.data.message);
+      setState({ vertical: "top", horizontal: "center", open: true });
+    } else if (data) {
+      console.log(data);
+      handleAction({ user: data.user, token: data.tokens.access.token });
+      localStorage.setItem("mobile", data.user.number);
+      localStorage.setItem("access_token", data.tokens.access.token);
+      localStorage.setItem("refresh_token", data.tokens.refresh.token);
+      navigate("/");
+    } else {
+      localStorage.clear();
+    }
   };
 
   return (
@@ -69,6 +103,19 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        autoHideDuration={2500}
+        onClose={handleClose}
+        // message="I love snacks"
+        key={vertical + horizontal}
+      >
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          {message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };
