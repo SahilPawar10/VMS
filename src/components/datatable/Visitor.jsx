@@ -2,15 +2,41 @@ import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { visitorColumns } from "../../datatablesource";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 // import { AllVisitor } from "../../api/visitor/apis";
+import MuiAlert from "@mui/material/Alert";
 import { ExportToExcel } from "../Export/ExportToExcel";
 import ConfirmDelete from "../ConfirmDelete/ConfirmDelete";
 import { AllVisitor, deleteVisitor } from "../../api/visitor/apis";
+import { selectProfile } from "./../../reducers/auth.reducer";
+import { Snackbar } from "@mui/material";
+import { useSelector } from "react-redux";
+
+const Alert = forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Visitor = () => {
   const [data, setData] = useState([]);
+
+  const user = useSelector(selectProfile);
+
+  // if (user) {
+  //   console.log("paresed user from state", user);
+  // }
+
+  console.log("paresed user from state", user);
+  const [state, setState] = useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+  const { vertical, horizontal, open } = state;
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
 
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchInput, setSearchInput] = useState("");
@@ -76,11 +102,13 @@ const Visitor = () => {
     deleteVisitor(id)
       .then((res) => {
         console.log(res.data);
+        getVisitor();
+        setState({ vertical: "top", horizontal: "center", open: true });
       })
       .catch((err) => console.log(err));
 
     console.log("handleDelete");
-    getVisitor();
+
     hideConfirmationModal();
   };
 
@@ -120,18 +148,22 @@ const Visitor = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        <div className="search">
-          <input
-            type="text"
-            placeholder="Search..."
-            onChange={(e) => searchItems(e.target.value)}
-          />
-          <SearchOutlinedIcon />
-        </div>
         {/* <div></div> */}
-
-        <div>
-          <ExportToExcel apiData={exportData} fileName={fileName} />
+        <u>Visitor</u>
+        <div className="d-flex">
+          <div className="search">
+            <input
+              type="text"
+              placeholder="Search..."
+              onChange={(e) => searchItems(e.target.value)}
+            />
+            <SearchOutlinedIcon />
+          </div>
+          <ExportToExcel
+            apiData={exportData}
+            fileName={fileName}
+            button={"Export"}
+          />
         </div>
       </div>
 
@@ -162,6 +194,19 @@ const Visitor = () => {
         id={id}
         message={deleteMessage}
       />
+
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        autoHideDuration={2500}
+        onClose={handleClose}
+        // message="I love snacks"
+        key={vertical + horizontal}
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Record Deleted Succesfully ...!
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

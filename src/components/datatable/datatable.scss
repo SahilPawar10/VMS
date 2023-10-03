@@ -1,18 +1,26 @@
 .datatable {
   height: 500px;
   padding: 20px;
-  margin-left: 20px;
-  
-  .datatableTitle{
+  // margin-left: 20px;
+
+  .datagrid{
+    .custom-header {
+      text-align: center;
+      color: #000;
+      background-color: #0d6efd;
+    }
+  }
+  .datatableTitle {
     width: 100%;
     font-size: 24px;
-    color: gray;
+    color: #5430dd;
     margin-bottom: 10px;
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    // align-items: center;
+    // display: flex;
+    justify-content: space-between;
 
-    .link{
+    .link {
       margin-left: 10px;
       text-decoration: none;
       background-color: #7451f8 !important;
@@ -37,6 +45,9 @@
       margin-right: 20px;
     }
   }
+  .css-1e2bxag-MuiDataGrid-root {
+    box-shadow: 0 0 0.375rem 0.25rem rgba(161, 172, 184, 0.15);
+  }
 
   .cellWithStatus {
     padding: 2px;
@@ -57,6 +68,25 @@
     }
   }
 
+  .approvalCell {
+    padding: 2px;
+    border-radius: 5px;
+    width: 100%;
+
+    &.approved {
+      background-color: rgba(0, 217, 255, 0.05);
+      color: green;
+    }
+    &.pending {
+      background-color: rgba(255, 217, 0, 0.05);
+      color: goldenrod;
+    }
+    &.rejected {
+      background-color: rgba(255, 0, 0, 0.05);
+      color: crimson;
+    }
+  }
+
   .cellAction {
     display: flex;
     align-items: center;
@@ -69,10 +99,10 @@
       border: 1px dotted rgba(0, 0, 139, 0.596);
       cursor: pointer;
     }
-    
+
     .deleteButton {
       padding: 2px 5px;
-      
+
       border-radius: 5px;
       color: crimson;
       border: 1px dotted rgba(220, 20, 60, 0.6);
@@ -98,12 +128,12 @@
     }
   }
 
-  .exportlink{
+  .exportlink {
     margin-left: 10px;
     text-decoration: none;
     background-color: #7451f8 !important;
     font-size: 15px;
-    color: #FCFCFD;
+    color: #fcfcfd;
     font-weight: 400;
     border: 1px solid rgb(238, 233, 233);
     padding: 5px;
@@ -111,57 +141,78 @@
     cursor: pointer;
   }
 
+  // <button class="button-34" role="button">Button 34</button>
 
-// <button class="button-34" role="button">Button 34</button>
+  /* CSS */
+  // <!-- HTML !-->
+  // <button class="button-30" role="button">Button 30</button>
 
-/* CSS */
-// <!-- HTML !-->
-// <button class="button-30" role="button">Button 30</button>
 
-/* CSS */
-.button-34 {
-  margin-right: 20px;
-  align-items: center;
-  appearance: none;
-  background-color: #FCFCFD;
-  border-radius: 10px;
-  border-width: 0;
-  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
-  box-sizing: border-box;
-  color: #36395A;
-  cursor: pointer;
-  display: inline-flex;
-  font-family: "JetBrains Mono",monospace;
-  height: 37 px;
-  justify-content: center;
-  line-height: 1;
-  list-style: none;
-  overflow: hidden;
-  padding-left: 16px;
-  padding-right: 16px;
-  position: relative;
-  text-align: left;
+}
+.abz {
+  .exportlink {
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+}
+.Excel-upload {
+  background-color: #7451f8 !important;
+  border: none !important;
+}
+// .viewButton_approvel{
+//   text-align: center;
+// padding: 2px 5px;
+// border-radius: 5px;
+// color: darkblue;
+// border: 1px dotted rgba(0, 0, 139, 0.596);
+// cursor: pointer
+// }
+
+.viewButton_approvel{
+  margin: 24px;
+  text-align: center;
+  padding: 2px 5px;
+  border-radius: 5px;
+  color: darkblue;
+  border: 1px dotted rgba(0, 0, 139, 0.596);
+  cursor: pointer
+}
+// .approve_act:active{
+//   content:  '';
+    //  display: block;
+    //  position: absolute;
+    //  bottom: 10px;
+    //  left: 0;
+    //  height: 3px;
+    //  width: 100%;
+    //  background-color: #0a551c;
+  //    transform-origin: right bottom;
+  //    transform: scale(0, 1);
+  //    transition: color 0.1s,transform 0.2s ease-out;
+  //    text-decoration:  overline 3px rgb(14, 85, 20);
+
+     
+  // }
+  .approve_act{
+    text-decoration: underline ;
+    margin: 0px 10 px;
+    position: relative;
+    
+   
+  }
+  .exportlink{
+  // margin-left: 10px;
   text-decoration: none;
-  transition: box-shadow .15s,transform .15s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
-  will-change: box-shadow,transform;
-  font-size: 18px;
-}
-
-.button-30:focus {
-  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-}
-
-.button-30:hover {
-  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-  transform: translateY(-2px);
-}
-
-.button-30:active {
-  box-shadow: #D6D6E7 0 3px 7px inset;
-  transform: translateY(2px);
-}
-}
+  background-color: #7451f8 !important;
+  font-size: 15px;
+  color: #fcfcfd;
+  font-weight: 400;
+  border: 1px solid rgb(238, 233, 233);
+  padding: 6px;
+  border-radius: 5px;
+  cursor: pointer;
+  }
+  
+//Datable Header css

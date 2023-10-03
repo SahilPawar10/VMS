@@ -12,9 +12,14 @@ function Todays() {
 
   // const navigate = useNavigate();
 
+
+
   const apiData = useMemo(async () => {
     console.log("ViewLogs");
-    return TodaysLogs().then((res) => setData(res.data));
+    return TodaysLogs().then((res) => {
+      setData(res.data);
+      console.log(res.data);
+    });
   }, []);
 
   const columns = [
@@ -71,8 +76,8 @@ function Todays() {
       field: "aprooval",
       headerName: "Aprooval",
       flex: 1,
-      valueGetter: (params) =>
-        params.row.aprooval === true ? "approved" : "pending",
+      // valueGetter: (params) =>
+      //   params.row.aprooval === true ? "approved" : "pending",
     },
     // {
     //   field: "checkout",

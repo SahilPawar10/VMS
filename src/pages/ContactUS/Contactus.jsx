@@ -176,7 +176,7 @@ const Contactus = () => {
       </Modal> */}
 
       <Modal
-        className="modal-dialog-centered"
+        className="modal-dialog-centered modals_d"
         show={Addshow}
         onHide={AddhandleClose}
       >

@@ -17,6 +17,7 @@ axiosInstance.interceptors.request.use(
       console.log(exp);
 
       if (Date.now() >= exp * 1000) {
+        localStorage.clear();
         if (refresh_token) {
           window.location.href = "/";
           localStorage.clear();

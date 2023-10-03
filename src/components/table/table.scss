@@ -17,13 +17,13 @@
     padding: 5px;
     border-radius: 5px;
 
-    &.Approved {
+    &.in {
       color: green;
-      background-color: rgba(0, 128, 0, 0.151);
+      background-color: rgba(66, 209, 66, 0.151);
     }
-    &.Pending {
-      color: goldenrod;
-      background-color: rgba(189, 189, 3, 0.103);
+    &.out {
+      color: rgb(218, 32, 156);
+      background-color: rgba(3, 77, 189, 0.103);
     }
   }
 }

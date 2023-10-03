@@ -23,7 +23,7 @@ const ViewOne = ({ id }) => {
         console.log(res.data);
         let addedId = [];
         for (let i = 0; i < res.data.length; i++) {
-          res.data[i].id = i;
+          res.data[i].id = i + 1;
           addedId.push(res.data[i]);
         }
         setVisitor(addedId);
@@ -47,10 +47,10 @@ const ViewOne = ({ id }) => {
           </TableCell>
           <TableCell className="tableCell">{row?.hostName}</TableCell>
           <TableCell className="tableCell">
-            {row?.checkin || "Not Data"}
+            {row?.checkin || "No Data"}
           </TableCell>
           <TableCell className="tableCell">
-            {row?.checkout || "Not Data"}
+            {row?.checkout || "No Data"}
           </TableCell>
           <TableCell className="tableCell">{row?.reason}</TableCell>
           {/* <TableCell className="tableCell">{row.reason}</TableCell> */}

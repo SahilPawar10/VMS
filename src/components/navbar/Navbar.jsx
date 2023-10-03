@@ -8,13 +8,49 @@ import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutline
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 
+import { useProfileStaffMutation } from "../../apiservices/staffSlice";
+import { setProfile } from "../../reducers/auth.reducer";
+import { useDispatch } from "react-redux";
+
 import { DarkModeContext } from "../../context/darkModeContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Profile from "../admin/Profile";
 
 const Navbar = () => {
   const { dispatch } = useContext(DarkModeContext);
+
+  const [staffProfile] = useProfileStaffMutation();
+  const navigate = useNavigate();
+
+  const reduxDispatch = useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      navigate("/login");
+    }
+    getProfile();
+  }, []);
+
+  async function getProfile() {
+    const number = localStorage.getItem("mobile");
+    // console.log(number);
+    const formData = {
+      mobile: number,
+    };
+
+    const { error, data } = await staffProfile(formData);
+
+    if (error) {
+      console.log(error);
+    } else if (data) {
+      // console.log(data, "navbar api");
+      // setUser(data);
+      // reduxDispatch(setProfile(data));
+    }
+  }
 
   return (
     <div className="navbar">

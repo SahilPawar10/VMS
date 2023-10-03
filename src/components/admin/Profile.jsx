@@ -12,17 +12,25 @@ import Tooltip from "@mui/material/Tooltip";
 import { Person, Call, Email } from "@mui/icons-material";
 import Logout from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
+import "../../components/admin/Profile.scss";
 // import { ViewProfile } from "../../api/apis";
 
 import { useState, useEffect } from "react";
 import ConfirmDelete from "../ConfirmDelete/ConfirmDelete";
-import { ViewProfile } from "../../api/staff/staff.api";
+
+import { useProfileStaffMutation } from "../../apiservices/staffSlice";
+import { setProfile } from "../../reducers/auth.reducer";
+import { useDispatch } from "react-redux";
 
 export default function Profile() {
+  //......................................RTK QUERY............................................
+
+  const [staffProfile] = useProfileStaffMutation();
   const [anchorEl, setAnchorEl] = useState(null);
   const [User, setUser] = useState({});
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -73,20 +81,22 @@ export default function Profile() {
     getProfile();
   }, []);
 
-  function getProfile() {
+  async function getProfile() {
     const number = localStorage.getItem("mobile");
-    console.log(number);
-    const data = {
+    // console.log(number);
+    const formData = {
       mobile: number,
     };
-    ViewProfile(data)
-      .then((res) => {
-        // console.log(res);
-        setUser(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
+    const { error, data } = await staffProfile(formData);
+
+    if (error) {
+      console.log(error);
+    } else if (data) {
+      // console.log(data);
+      setUser(data);
+      // dispatch(setProfile(data));
+    }
   }
 
   return (

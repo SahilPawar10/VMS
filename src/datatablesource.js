@@ -45,6 +45,7 @@ export const approvalColumns = [
     field: "srNo",
     headerName: "Sr.No",
     align: "center",
+    width: 50,
     // valueGetter: (params) => params["srNo"],
   },
   { field: "id", headerName: "ID", width: 70 },
@@ -68,25 +69,30 @@ export const approvalColumns = [
   {
     field: "appointDate",
     headerName: "Date",
-    width: 230,
+    width: 120,
   },
 
   {
     field: "hostName",
-    headerName: "Host",
+    headerName: "Host Name",
+    width: 160,
+  },
+  {
+    field: "purpose",
+    headerName: "Purpose",
     width: 160,
   },
   {
     field: "aprooval",
     headerName: "Status",
-    width: 100,
-    // renderCell: (params) => {
-    //   return (
-    //     <div className={`cellWithStatus ${params.row.aprooval}`}>
-    //       {params.row.aprooval}
-    //     </div>
-    //   );
-    // },
+    width: 120,
+    renderCell: (params) => {
+      return (
+        <div className={`approvalCell ${params.row.aprooval}`}>
+          {params.row.aprooval.toUpperCase()}
+        </div>
+      );
+    },
   },
 ];
 

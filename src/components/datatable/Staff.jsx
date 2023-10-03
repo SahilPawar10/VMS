@@ -2,42 +2,90 @@ import "./datatable.scss";
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { staffColumns } from "../../datatablesource";
-
+import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import TelegramIcon from "@mui/icons-material/Telegram";
-
 // import Button from "@mui/material/Button";
-
-import Button from "react-bootstrap/Button";
-
 import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
-
 import Modal from "react-bootstrap/Modal";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-// import Modal from "@mui/material/Modal";
-// import { AddGateman, importStaff, Staff as staff } from "../../api/apis";
 import ConfirmDelete from "../ConfirmDelete/ConfirmDelete";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import { ExportToExcel } from "../Export/ExportToExcel";
 import {
-  AddGateman,
-  deleteStaff,
-  importStaff,
-  Staff as staff,
-} from "../../api/staff/staff.api";
+  useViewStaffQuery,
+  useAddStaffMutation,
+  useDeleteStaffMutation,
+  useImportStaffMutation,
+} from "../../apiservices/staffSlice";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 const Staff = () => {
-  const [data, setData] = useState([]);
+  // const staffData = useViewStaffQuery();
+  const [apidata, setApiData] = useState([]);
+  //..............................RTK QUERY.........................................
+  const { data, isLoading, isError, error, refetch } = useViewStaffQuery();
+
+  const [addStaff] = useAddStaffMutation();
+
+  const [deleteStaff] = useDeleteStaffMutation();
+
+  const [importStaff] = useImportStaffMutation();
+
+  // function renderData() {
+  //   if (isError) {
+  //     console.log(error);
+  //   }
+
+  //   if (isLoading) {
+  //     console.log("pending................");
+  //   }
+  //   if (data) {
+  //     const addFields = data.staffData.map((staffItem, index) => ({
+  //       srNo: index + 1,
+  //       role: data.roles[index],
+  //       ...staffItem,
+  //     }));
+
+  //     console.log(addFields, "renderData");
+  //     setApiData(addFields);
+  //   }
+  // }
+
+  useEffect(() => {
+    if (isError) {
+      console.log(error);
+    }
+
+    if (isLoading) {
+      console.log("pending................");
+    }
+    if (data) {
+      const addFields = data.staffData.map((staffItem, index) => ({
+        srNo: index + 1,
+        role: data.roles[index],
+        ...staffItem,
+      }));
+
+      console.log(addFields, "renderData");
+      setApiData(addFields);
+    }
+  }, [data, isLoading, isError, error]);
+
   const [view, setView] = useState({});
   const [formData, setFormData] = useState();
-  const [error, setError] = useState();
-  const [snackopen, setSnackOpen] = useState(false);
+  const [message, setMessage] = useState();
+  const [snackopen, setSnackOpen] = useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+
   const [show, setShow] = useState(false);
   const [mobileError, setMobileError] = useState(false);
 
@@ -57,8 +105,24 @@ const Staff = () => {
   };
   // const [loading, setLoading] = useState(false);
 
+  //.....................SnackBar................................
+
+  const { vertical, horizontal, open } = snackopen;
+
+  //snackClose
+  const handleSnackClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setSnackOpen({ ...snackopen, open: false });
+    setSeverity("");
+    setMessage("");
+  };
+
   const handleClose = () => setShow(false);
   const handleShow = (id) => {
+    console.log(id);
     handleSelect(id);
     setShow(true);
   };
@@ -69,9 +133,33 @@ const Staff = () => {
   };
   // // Addnew
   const [Addshow, setAddShow] = useState(false);
-  //pending
 
+  // import Button
+  const [uploadshow, setuploadShow] = useState(false);
+
+  const uploadhandleClose = () => {
+    setuploadShow(false);
+    setSelectedFile(null);
+  };
+  const uploadhandleShow = () => setuploadShow(true);
+
+  //pending
+  const [severity, setSeverity] = useState();
   const [pendingModel, setPendingModel] = useState(false);
+
+  //.....................sampleFile..............................
+
+  const sampleData = [
+    {
+      firstName: "",
+      lastName: "",
+      email: "",
+      mobileno: "",
+      role: "employee or gateman",
+    },
+  ];
+
+  const sampleFile = "sample";
 
   const AddPendingClose = () => {
     setPendingModel(false);
@@ -87,22 +175,28 @@ const Staff = () => {
 
   const AddnewhandleShow = () => {
     setAddShow(true);
-    setError("");
+    setMessage("");
   };
 
-  const handleDelete = (id) => {
+  //...................................Delete Data from UI................................
+  const handleDelete = async (id) => {
     // setData(data.filter((item) => item.id !== id));
-    console.log("handleDelete");
-    deleteStaff(id)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        setError(err.response.data.message);
-        setSnackOpen(true);
-      });
-
-    hideConfirmationModal();
+    const { error, data } = await deleteStaff(id);
+    if (error) {
+      // console.log(error);
+      setMessage(error.data.message);
+      setSeverity("error");
+      setSnackOpen({ vertical: "top", horizontal: "center", open: true });
+      hideConfirmationModal();
+    }
+    if (data) {
+      refetch();
+      console.log(data);
+      setSeverity("success");
+      setMessage("Record deleted successfully");
+      setSnackOpen({ vertical: "top", horizontal: "center", open: true });
+      hideConfirmationModal();
+    }
   };
 
   // Handle the displaying of the modal based on type and id
@@ -114,51 +208,55 @@ const Staff = () => {
   };
 
   const handleSelect = (id) => {
-    console.log(data.find((user) => user.id === id));
-    setView(data.find((user) => user.id === id));
+    console.log(apidata.find((user) => user.id === id));
+    setView(apidata.find((user) => user.id === id));
   };
 
   const [selectedFile, setSelectedFile] = useState(null);
+
+  //...................................Import File................................
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    // const name = event.target.name;
     setSelectedFile(file);
   };
 
-  //snackClose
-  const handleSnackClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setSnackOpen(false);
-  };
-
-  useEffect(() => {
-    if (selectedFile) {
+  //................................upload file.................................
+  async function handleUpload() {
+    if (!selectedFile) {
       // alert("selected file present");
 
-      const formData = new FormData();
+      alert("Select File First");
 
-      formData.append("file", selectedFile);
-
-      AddPendingOpen();
-
-      console.log(selectedFile);
-      importStaff(formData)
-        .then((res) => {
-          console.log(res.data);
-          getData();
-          AddPendingClose();
-        })
-        .catch((err) => {
-          console.log(err);
-          setError(err.response.data.message);
-          setSnackOpen(true);
-          AddPendingClose();
-        });
+      return;
     }
-    setSelectedFile(null);
-  }, [selectedFile]);
+    const formData = new FormData();
+
+    formData.append("file", selectedFile);
+
+    // AddPendingOpen();
+
+    const { error, data } = await importStaff(formData);
+    if (error) {
+      console.log(error);
+      setMessage(error.data.message);
+      setSeverity("error");
+      // setSnackOpen(true);
+      uploadhandleClose();
+      setSnackOpen({ vertical: "top", horizontal: "center", open: true });
+      // AddPendingClose();
+    } else if (data) {
+      console.log(data, " :data");
+      // AddPendingClose();
+      setSeverity("success");
+      // setSnackOpen(true);
+      setMessage(data.message);
+      uploadhandleClose();
+      setSnackOpen({ vertical: "top", horizontal: "center", open: true });
+      refetch();
+    }
+    // setSelectedFile(null);
+  }
 
   // const valid = validEmail.status ? <p className={validEmail.status}></p> : <p>not valid</p>;
 
@@ -167,6 +265,8 @@ const Staff = () => {
 
     const name = e.target.name;
     const value = e.target.value;
+
+    console.log(name, value);
 
     if (name === "email") {
       const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -183,7 +283,7 @@ const Staff = () => {
       }
     }
     if (name === "mobileno") {
-      if (value.length > 10) {
+      if (value.length > 10 || value.length < 10) {
         console.log("less than 5 characters required");
         setMobileError(true);
       } else {
@@ -197,45 +297,26 @@ const Staff = () => {
     }));
   };
 
-  //Add GateMan
+  //...................................Add GateMan.................................
 
-  function addNew() {
+  async function addNew() {
     AddPendingOpen();
-    AddGateman(formData)
-      .then((res) => {
-        console.log(res.data);
-        getData();
-        AddhandleClose();
-        AddPendingClose();
-      })
-      .catch((err) => {
-        console.log(err.response.data.message);
-        setError(err.response.data.message);
-        setSnackOpen(true);
-        AddPendingClose();
-        // setAddShow(false);
-      });
+    const { error, data } = await addStaff(formData);
+    if (error) {
+      console.log(error.response.data.message);
+      AddPendingClose();
+      setMessage(error.response.data.message);
+      setSnackOpen({ vertical: "top", horizontal: "center", open: true });
+    }
+    if (data) {
+      refetch();
+      AddPendingClose();
+      AddhandleClose();
+      AddPendingClose();
+      setMessage("Reocrd Added Successfully..!");
+      setSnackOpen({ vertical: "top", horizontal: "center", open: true });
+    }
   }
-
-  function getData() {
-    staff()
-      .then((res) => {
-        let addedId = [];
-        for (let i = 0; i < res.data.staffData.length; i++) {
-          res.data.staffData[i].srNo = i + 1;
-          res.data.staffData[i].role = res.data.roles[i];
-          addedId.push(res.data.staffData[i]);
-        }
-        setData(addedId);
-        // console.log(addedId);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-  useEffect(() => {
-    getData();
-  }, []);
 
   const actionColumn = [
     {
@@ -257,7 +338,7 @@ const Staff = () => {
             <div
               className="deleteButton"
               // onClick={() => handleDelete(params.row.id)}
-              onClick={() => showDeleteModal(params.row.id)}
+              onClick={() => showDeleteModal(params.id)}
             >
               Delete
             </div>
@@ -266,85 +347,111 @@ const Staff = () => {
       },
     },
   ];
-  // return (
-  //   <div className="datatable">
-  //     <div className="datatableTitle">
-  //       <Link to="/users/new" className="link">
-  //         Add New
-  //       </Link>
-  //       {/* Add New User */}
-  //       <Link to="/users/new" className="link">
-  //         Import
-  //         {/* <Link to="/users/new" className="link">
-  //           Export
-  //         </Link> */}
-  //       </Link>
-  //     </div>
-  //     <DataGrid
-  //       className="datagrid"
-  //       rows={data}
-  //       columns={staffColumns.concat(actionColumn)}
-  //       pageSize={9}
-  //       rowsPerPageOptions={[9]}
-  //       // checkboxSelection
-  //     />
-  //   </div>
-  // );
+
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        <button className="btn btn-primary link" onClick={AddnewhandleShow}>
-          <AddCircleIcon fontSize="small" />
-          &nbsp;add new
-        </button>
+        <div>
+          <u>Staff</u>
+        </div>
 
         <div>
+          <button className="btn btn-primary link" onClick={AddnewhandleShow}>
+            <AddCircleIcon fontSize="small" />
+            &nbsp;Add new
+          </button>
           <input
             type="file"
             onChange={handleFileChange}
             style={{ display: "none" }}
             id="fileInput"
           />
-          {/* <label htmlFor="fileInput" className="link">
-            <CloudDownloadIcon fontSize="small" /> &nbsp;Import
-          </label> */}
-
-          <button className="btn btn-primary link">
-            {/* <AddCircleIcon fontSize="small" />
-            &nbsp;add new */}
-            <input
-              type="file"
-              onChange={handleFileChange}
-              style={{ display: "none" }}
-              id="fileInput"
-            />
-            <label htmlFor="fileInput">
-              <CloudDownloadIcon fontSize="small" /> &nbsp;Import
-            </label>
+          <button className="btn btn-primary link" onClick={uploadhandleShow}>
+            Bulk Upload
           </button>
-          <Snackbar
-            open={snackopen}
-            autoHideDuration={4000}
-            onClose={handleSnackClose}
+          {/* ......................................ImportFile Model.................................... */}
+          <Modal
+            show={uploadshow}
+            onHide={uploadhandleClose}
+            dialogClassName="modal-lg"
           >
-            <Alert
-              onClose={handleSnackClose}
-              severity="error"
-              sx={{ width: "100%" }}
-            >
-              {error}
-            </Alert>
-          </Snackbar>
+            <Modal.Header closeButton>
+              <b>
+                <h5>Instructions for Bulk user Upload</h5>
+              </b>
+            </Modal.Header>
+            <Modal.Body>
+              <p>
+                Our system will process the file and import the users
+                automatically contac tour support team for assistance if needed
+              </p>
+              <ul>
+                <li>
+                  1. Download the Excel template and fill data without changing
+                  headers.
+                </li>
+                <li>2. Save the filled-in Excel file.</li>
+                <li>3. Upload the saved Excel file Below.</li>
+                <li>4. Initate the upload process to add bulk users.</li>
+              </ul>
+              <b>Thank you for choosing our services !</b> <br />
+              <small>
+                Please note that valid email Id and mobile number should be
+                written
+              </small>
+            </Modal.Body>
+            <Modal.Footer>
+              <div className="col-12 text-center d-grid">
+                <button className="btn btn-primary link  Excel-upload">
+                  <input
+                    type="file"
+                    onChange={handleFileChange}
+                    style={{ display: "none" }}
+                    id="fileInput"
+                  />
+                  {selectedFile ? (
+                    <label htmlFor="fileInput">{selectedFile["name"]}</label>
+                  ) : (
+                    <label htmlFor="fileInput">
+                      <CloudDownloadIcon fontSize="small" /> &nbsp;Select an
+                      Excel file:
+                    </label>
+                  )}
+                </button>
+              </div>
+              <div className=" d-flex col-12 gap-2">
+                <div className="col-6 d-grid abz ">
+                  {/* <Button variant="secondary">Download</Button>
+                   */}
+                  <ExportToExcel
+                    fileName={sampleFile}
+                    apiData={sampleData}
+                    button={"Download Template"}
+                  />
+                </div>
+                <div className="col-6 d-grid">
+                  <Button variant="primary" onClick={handleUpload}>
+                    {" "}
+                    Upload
+                  </Button>
+                </div>
+              </div>
+            </Modal.Footer>
+          </Modal>
         </div>
       </div>
+
+      {/* ......................................Data Table.................................... */}
       <DataGrid
         className="datagrid"
-        rows={data}
+        rows={apidata}
         columns={staffColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         // checkboxSelection
       />
+
+      {/* ......................................Add New Model................................... */}
       <Modal show={Addshow} onHide={AddhandleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add New</Modal.Title>
@@ -369,8 +476,8 @@ const Staff = () => {
               placeholder="Last Name"
               className="input1"
               name="lastName"
-              minlength={3}
-              maxlength={15}
+              minLength={3}
+              maxLength={15}
               size="15"
               onChange={OnChange}
               autoFocus
@@ -404,10 +511,23 @@ const Staff = () => {
               autoFocus
             />
             {mobileError ? (
-              <span className="text-danger">Invalid mobile no.</span>
+              <span className="text-danger">Enter Numbers upto 10.</span>
             ) : (
               ""
             )}
+          </Form.Group>
+
+          <Form.Group className="mb-4" controlId="exampleForm.ControlInput1">
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              onChange={OnChange}
+              name="role"
+            >
+              <option selected>Click to select role</option>
+              <option value="gateman">Gateman</option>
+              <option value="employee">Employee</option>
+            </select>
           </Form.Group>
 
           <div className="d-grid gap-3">
@@ -421,14 +541,17 @@ const Staff = () => {
           </div>
         </Modal.Body>
       </Modal>
+
+      {/* ......................................Pending Api Model.................................... */}
       <Modal show={pendingModel}>
         <Modal.Body> Loading...</Modal.Body>
       </Modal>
+
+      {/* ......................................View Staff Model.................................... */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Staff detail</Modal.Title>
         </Modal.Header>
-
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -482,6 +605,8 @@ const Staff = () => {
           </Form>
         </Modal.Body>
       </Modal>
+
+      {/* ......................................Confirm Model.................................... */}
       <ConfirmDelete
         showModal={displayConfirmationModal}
         hideModal={hideConfirmationModal}
@@ -489,6 +614,24 @@ const Staff = () => {
         id={id}
         message={deleteMessage}
       />
+      <div>
+        {/* ......................................SnackBar.................................... */}
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={open}
+          autoHideDuration={1000}
+          onClose={handleSnackClose}
+          key={vertical + horizontal}
+        >
+          <Alert
+            onClose={handleSnackClose}
+            severity={severity}
+            sx={{ width: "100%" }}
+          >
+            {message}
+          </Alert>
+        </Snackbar>
+      </div>
     </div>
   );
 };
